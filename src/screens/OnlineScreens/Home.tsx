@@ -14,7 +14,6 @@ const Home: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
     // on récupère userId depuis le contexte d'authentification
     const { userId } = useAuthContext();
-    const id = parseInt(userId) ?? 0;
 
     // 2. useEffect
     useEffect(() => {
@@ -27,7 +26,7 @@ const Home: React.FC = () => {
     // 4. on fait le truc pour supprimer
     const handleDelete = async (id: number) => {
         if (await deleteNote(id)) {
-            dispatch(fetchNotes())
+            dispatch(fetchNotes(userId));
         }
     }
 
