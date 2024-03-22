@@ -45,11 +45,10 @@ const noteSlice = createSlice({
 export const {setNotes, setLoading} = noteSlice.actions;
 
 // 8. On ajoute les actions asynchrones dans le fetchNotes
-export const fetchNotes = (): ThunkAction<void, RootState, unknown, NoteAction> => async dispatch => {
+export const fetchNotes = (id:string): ThunkAction<void, RootState, unknown, NoteAction> => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const response = await axios.get(`${API_URL}/notes?page=1`);
-        console.log('dddddddddd' , response.data)
+        const response = await axios.get<HydraResponse<Note>>(`${API_URL}/notes?page=1&user.id=${id}`);
         dispatch(setNotes(response.data));
         dispatch(setLoading(false));
     } catch (error) {
